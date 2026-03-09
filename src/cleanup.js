@@ -19,6 +19,10 @@ async function run() {
 
     console.log(`The IP ${myPublicIp} is removed`);
   } catch (error) {
+    if (error?.message.match(/rule does not exist in this security group/i)) {
+      console.log(`Ignoring error - ${error.message}, continuing...`);
+      return;
+    }
     core.setFailed(error.message);
   }
 }
